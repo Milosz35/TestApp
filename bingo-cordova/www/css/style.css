@@ -1,0 +1,145 @@
+:root {
+  --bg: #0f1220;
+  --card: #1a1f35;
+  --tile: #242b4a;
+  --tileChecked: #2e9e5b;
+  --text: #ffffff;
+  --muted: rgba(255,255,255,0.7);
+  --border: rgba(255,255,255,0.14);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: radial-gradient(1000px 600px at 20% 0%, #2a2f55, var(--bg));
+  color: var(--text);
+  min-height: 100vh;
+  padding: 16px;
+}
+
+#confetti{
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  display: none;
+  z-index: 9999;
+}
+
+.app-logo{
+  width: 96px;
+  height: 96px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto 10px auto;
+}
+
+.top {
+  max-width: 900px;
+  margin: 0 auto 14px auto;
+}
+
+h1 {
+  margin: 0 0 6px 0;
+  font-size: 26px;
+}
+
+.muted { color: var(--muted); }
+.small { font-size: 12px; }
+
+main {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.board{
+  width: min(100vw, 520px);
+  margin: 0 auto;
+  padding: 8px;
+  box-sizing: border-box;
+
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.tile {
+  background: var(--tile);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+
+  min-width: 0; 
+  width: 100%;
+  box-sizing: border-box;
+
+  padding: 10px;
+  min-height: 90px;
+
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  user-select: none;
+  transition: transform 0.08s ease, background 0.15s ease;
+
+  font-size: 13px;
+  line-height: 1.2;
+
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.tile:active { transform: scale(0.98); }
+
+.tile.checked {
+  background: var(--tileChecked);
+  border-color: rgba(255,255,255,0.2);
+  font-weight: bold;
+}
+
+.controls {
+  margin-top: 14px;
+  padding: 12px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+}
+
+.btn {
+  padding: 10px 14px;
+  border: none;
+  border-radius: 10px;
+  background: #4b67ff;
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.status {
+  margin: 10px 0 6px 0;
+  font-weight: 700;
+}
+
+footer {
+  margin: 0 0 3px 0;
+  font-size: 8px;
+}
+
+@media (max-width: 420px){
+  .board{ gap: 6px; padding: 6px; }
+  .tile{ padding: 8px 6px; font-size: 10px; }
+}
+
+@media (max-width: 360px){
+  .board{ gap: 5px; padding: 5px; }
+  .tile{ padding: 6px 5px; font-size: 9px; }
+}

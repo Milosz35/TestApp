@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bingo tygodnia</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="top">
+    <h1>🎲 Bingo tygodnia</h1>
+  <p id="weekInfo" class="muted"></p>
+  </header>
+
+  <main>
+    <div id="board" class="board" aria-label="Plansza bingo 5 na 5"></div>
+    <canvas id="confetti"></canvas>
+
+    <section class="controls">
+      <button id="newBoardBtn" class="btn">Wygeneruj nową planszę</button>
+      <p id="status" class="status"></p>
+      <p class="muted small">
+        Plansza zmienia się automatycznie co tydzień. W tym tygodniu nie da się jej zresetować (chyba że usuniesz dane aplikacji).
+      </p>
+    </section>
+
+    <footer>@ver1.0.3</footer>
+  </main>
+  <script src="cordova.js"></script>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
