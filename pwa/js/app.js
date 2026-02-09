@@ -10,7 +10,6 @@ const TILES_COUNT = SIZE * SIZE;
 
 function boot() {
   init();
-  scheduleMondayNotification(); 
 }
 
 if ("serviceWorker" in navigator) {
@@ -223,25 +222,4 @@ function nextMondayAt(hour = 9, minute = 0) {
   return d;
 }
 
-function scheduleMondayNotification() {
-  if (!cordova || !cordova.plugins || !cordova.plugins.notification) return;
-
-  const notif = cordova.plugins.notification.local;
-
-  notif.requestPermission((granted) => {
-    if (!granted) return;
-
-    const first = nextMondayAt(9, 0);
-
-    notif.cancel(1001, () => {
-      notif.schedule({
-        id: 1001,
-        title: "Nowa plansza Bingo!",
-        text: "Wygenerowano nową planszę na ten tydzień 🎯",
-        trigger: { firstAt: first, every: "week" },
-        foreground: true
-      });
-    });
-  });
-}
 
