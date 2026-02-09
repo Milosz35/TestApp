@@ -18,11 +18,6 @@ if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("./sw.js");
   });
 }
-if (window.cordova) {
-  document.addEventListener("deviceready", boot, false);
-} else {
-  document.addEventListener("DOMContentLoaded", boot);
-}
 
 function getWeekKey() {
   const now = new Date();
