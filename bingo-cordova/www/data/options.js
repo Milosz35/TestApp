@@ -50,7 +50,7 @@ export const options = [
   "Kustosz robi t-rex'a",
   "Fortuna rzuca niestosownym żartem",
   "Tolo przychodzi na trening własny",
-  "Pani małgosia zamyyka sale",
+  "Pani małgosia zamyka sale",
   "Kubuś zbija z tobą piątke",
   "Wapek marudzi",
   "Daria kogośczesze",
