@@ -4,24 +4,20 @@ const boardEl = document.getElementById("board");
 const statusEl = document.getElementById("status");
 const weekInfoEl = document.getElementById("weekInfo");
 const newBoardBtn = document.getElementById("newBoardBtn");
+const goldenCountEl = document.getElementById("goldenCount");
 
 const SIZE = 5;
 const TILES_COUNT = SIZE * SIZE;
 
 function boot() {
   init();
+  scheduleMondayNotification(); 
 }
 
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", boot);
+if (window.cordova) {
+  document.addEventListener("deviceready", boot, false);
 } else {
-  boot();
-}
-
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker.register("./sw.js");
-  });
+  document.addEventListener("DOMContentLoaded", boot);
 }
 
 function getWeekKey() {
@@ -90,6 +86,7 @@ function renderBoard(board) {
       saveBoard(weekKey, board);
       renderBoard(board);
       checkWin(board);
+      goldenBingo(board);
     });
 
     boardEl.appendChild(div);
@@ -122,7 +119,7 @@ function checkWin(board) {
   const hasBingo = lines.some(line => line.every(i => checked[i]));
 
   if (hasBingo) {
-    statusEl.textContent = "🎉 BINGO! Wygrałeś. Czekaj na nowy tydzień 😄";
+    statusEl.textContent = "🎉 BINGO! Wygrałeś😄";
 
     if (!hasWonThisWeek()) {
       setWonThisWeek();
@@ -134,19 +131,39 @@ function checkWin(board) {
   }
 }
 
+function getGoldenCount() {
+  return parseInt(localStorage.getItem("goldenCount") || "0", 10);
+}
+function setGoldenCount(v) {
+  localStorage.setItem("goldenCount", String(v));
+}
+function updateGoldenCountUI() {
+  if (!goldenCountEl) return;
+  goldenCountEl.textContent = `Złote Bingo: ${getGoldenCount()}`;
+}
+
+function hasGoldenThisWeek() {
+  const week = getWeekKey();
+  return localStorage.getItem("bingo-golden-" + week) === "1";
+}
+function setGoldenThisWeek() {
+  const week = getWeekKey();
+  localStorage.setItem("bingo-golden-" + week, "1");
+}
 
 function init() {
   const weekKey = getWeekKey();
   weekInfoEl.textContent = `Tydzień: ${weekKey}`;
-
+  updateGoldenCountUI();
   let board = loadBoard(weekKey);
   if (!board) {
     board = createNewBoard(weekKey);
   }
-
+  if (hasGoldenThisWeek()) boardEl.classList.add("golden");
+  else boardEl.classList.remove("golden");
   renderBoard(board);
   checkWin(board);
-
+  goldenBingo(board);
   newBoardBtn.addEventListener("click", () => {
     alert("Nową planszę dostaniesz w kolejnym tygodniu 🙂");
   });
@@ -228,4 +245,44 @@ function nextMondayAt(hour = 9, minute = 0) {
   return d;
 }
 
+function scheduleMondayNotification() {
+  if (!cordova || !cordova.plugins || !cordova.plugins.notification) return;
 
+  const notif = cordova.plugins.notification.local;
+
+  notif.requestPermission((granted) => {
+    if (!granted) return;
+
+    const first = nextMondayAt(9, 0);
+
+    notif.cancel(1001, () => {
+      notif.schedule({
+        id: 1001,
+        title: "Nowa plansza Bingo!",
+        text: "Wygenerowano nową planszę na ten tydzień 🎯",
+        trigger: { firstAt: first, every: "week" },
+        foreground: true
+      });
+    });
+  });
+}
+
+function goldenBingo(board) {
+  const allChecked = board.every(t => t.checked);
+
+  if (!allChecked) return;
+
+  if (hasGoldenThisWeek()) return;
+
+  setGoldenThisWeek();
+  boardEl.classList.add("golden");
+
+  const next = getGoldenCount() + 1;
+  setGoldenCount(next);
+  updateGoldenCountUI();
+
+  statusEl.textContent = `✨ ZŁOTE BINGO! (${next}) ✨`;
+
+  vibrate(200);
+  startConfetti(5000);
+}

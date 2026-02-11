@@ -134,6 +134,16 @@ footer {
   font-size: 8px;
 }
 
+.board.golden .tile{
+  background: #D4AF37 !important;
+  border-color: #b88a00 !important;
+  color: #111 !important;
+}
+
+.board.golden .tile.checked{
+  background: #D4AF37 !important;
+}
+
 @media (max-width: 420px){
   .board{ gap: 6px; padding: 6px; }
   .tile{ padding: 8px 6px; font-size: 10px; }
