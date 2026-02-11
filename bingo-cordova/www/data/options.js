@@ -23,5 +23,22 @@ export const options = [
   "Clemi spóźnia się na łacine",
   "Jacek mówiący do Błażeja 'Senior'",
   "'Gejowskie rączki'",
-  "Rozciąganie pod koniec zajęć"
+  "Rozciąganie pod koniec zajęć",
+  "Aleksik na sali", 
+  "Marcin mówi że Julka to gumiś",
+  "Marcin wspomina o anatomii",
+  "Zmieniona fryzura Jacka",
+  "Jakiś chłopak zapomniał spodni",
+  "Borek podlicza makrosy",
+  "Borek rozmarza się o białeczku",
+  "Dziewczyny tańczą solo",
+  "Jacek mówi że jego partnerka czegoś nieogrania",
+  "Ala gra w Impostora",
+  "Szulc wylatuje z pilatesu",
+  "Tolo wspomina o oddechu",
+  "Marcinowi rozpina się guzik w koszuli",
+  "Marcin podrywa dziewczyny",
+  "Pakuła płacze",
+  "dobax się obrusza",
+  "Jacek mówi o UK"
 ];
