@@ -5,6 +5,8 @@ const statusEl = document.getElementById("status");
 const weekInfoEl = document.getElementById("weekInfo");
 const newBoardBtn = document.getElementById("newBoardBtn");
 const goldenCountEl = document.getElementById("goldenCount");
+const rerollBtn = document.getElementById("rerollBtn");
+const rerollsInfoEl = document.getElementById("rerollsInfo");
 
 const SIZE = 5;
 const TILES_COUNT = SIZE * SIZE;
@@ -40,6 +42,25 @@ function shuffle(arr) {
     [a[i], a[j]] = [a[j], a[i]];
   }
   return a;
+}
+
+function rerollsKey() { return "bingo-rerolls-" + getWeekKey(); }
+function bingoRewardKey() { return "bingo-rewarded-" + getWeekKey(); }
+function goldenRewardKey() { return "golden-rewarded-" + getWeekKey(); }
+
+function getRerolls() {
+  return parseInt(localStorage.getItem(rerollsKey()) || "3", 10);
+}
+function setRerolls(v) {
+  localStorage.setItem(rerollsKey(), String(Math.max(0, v)));
+  updateRerollsUI();
+}
+function addRerolls(n) {
+  setRerolls(getRerolls() + n);
+}
+function updateRerollsUI() {
+  if (!rerollsInfoEl) return;
+  rerollsInfoEl.textContent = `Rerolle w tym tygodniu: ${getRerolls()}`;
 }
 
 function storageKeyForWeek(weekKey) {
@@ -80,14 +101,40 @@ function renderBoard(board) {
     div.textContent = tile.text;
 
     div.addEventListener("click", () => {
-      tile.checked = !tile.checked;
-      vibrate(tile.checked ? 30 : 15);
-      const weekKey = getWeekKey();
-      saveBoard(weekKey, board);
-      renderBoard(board);
-      checkWin(board);
-      goldenBingo(board);
-    });
+      if (rerollMode) {
+    const r = getRerolls();
+    if (r <= 0) {
+      statusEl.textContent = "Brak rerolli w tym tygodniu 😅";
+      setRerollMode(false);
+      return;
+    }
+
+    const newText = pickNewTileText(board, tile.text);
+    if (!newText) {
+      statusEl.textContent = "Brak nowych tekstów do wylosowania (za mało opcji).";
+      setRerollMode(false);
+      return;
+    }
+
+    tile.text = newText;
+    tile.checked = false;
+    setRerolls(r - 1);
+    saveBoard(getWeekKey(), board);
+    setRerollMode(false);
+    renderBoard(board);
+    checkWin(board);
+    goldenBingo(board);
+    return;
+  }
+
+  tile.checked = !tile.checked;
+  vibrate(tile.checked ? 30 : 15);
+  const weekKey = getWeekKey();
+  saveBoard(weekKey, board);
+  renderBoard(board);
+  checkWin(board);
+  goldenBingo(board);
+});
 
     boardEl.appendChild(div);
   });
@@ -125,6 +172,10 @@ function checkWin(board) {
       setWonThisWeek();
       vibrate(120);
       startConfetti(2500);
+      if (hasBingo && localStorage.getItem(bingoRewardKey()) !== "1") {
+      localStorage.setItem(bingoRewardKey(), "1");
+      addRerolls(1);
+      }
     }
   } else {
     statusEl.textContent = "";
@@ -155,6 +206,16 @@ function init() {
   const weekKey = getWeekKey();
   weekInfoEl.textContent = `Tydzień: ${weekKey}`;
   updateGoldenCountUI();
+  updateRerollsUI();
+
+rerollBtn.addEventListener("click", () => {
+  if (getRerolls() <= 0) {
+    statusEl.textContent = "Brak rerolli w tym tygodniu 😅";
+    return;
+  }
+  statusEl.textContent = "Kliknij kafelek, który chcesz przerollować.";
+  setRerollMode(true);
+});
   let board = loadBoard(weekKey);
   if (!board) {
     board = createNewBoard(weekKey);
@@ -267,6 +328,24 @@ function scheduleMondayNotification() {
   });
 }
 
+let rerollMode = false;
+
+function setRerollMode(on) {
+  rerollMode = on;
+  boardEl.classList.toggle("reroll-mode", on);
+  if (rerollBtn) rerollBtn.textContent = on ? "Wybierz kafelek…" : "🎲 Reroll kafelka";
+}
+
+function pickNewTileText(board, oldText) {
+  const used = new Set(board.map(t => t.text));
+  used.delete(oldText);
+
+  const candidates = options.filter(t => !used.has(t));
+  if (candidates.length === 0) return null;
+
+  return candidates[Math.floor(Math.random() * candidates.length)];
+}
+
 function goldenBingo(board) {
   const allChecked = board.every(t => t.checked);
 
@@ -282,7 +361,10 @@ function goldenBingo(board) {
   updateGoldenCountUI();
 
   statusEl.textContent = `✨ ZŁOTE BINGO! (${next}) ✨`;
-
+  if (localStorage.getItem(goldenRewardKey()) !== "1") {
+  localStorage.setItem(goldenRewardKey(), "1");
+  addRerolls(3);
+  }
   vibrate(200);
   startConfetti(5000);
 }

@@ -144,6 +144,14 @@ footer {
   background: #D4AF37 !important;
 }
 
+.board.reroll-mode .tile{
+  outline: 2px dashed #D4AF37;
+}
+
+.board.reroll-mode .tile:hover{
+  transform: scale(1.02);
+}
+
 @media (max-width: 420px){
   .board{ gap: 6px; padding: 6px; }
   .tile{ padding: 8px 6px; font-size: 10px; }
