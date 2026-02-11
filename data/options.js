@@ -36,4 +36,9 @@ export const options = [
   "Ala gra w Impostora",
   "Szulc wylatuje z pilatesu",
   "Tolo wspomina o oddechu",
+  "Marcinowi rozpina się guzik w koszuli",
+  "Marcin podrywa dziewczyny",
+  "Pakuła płacze",
+  "dobax się obrusza",
+  "Jacek mówi o UK"
 ];
