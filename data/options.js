@@ -40,5 +40,20 @@ export const options = [
   "Marcin podrywa dziewczyny",
   "Pakuła płacze",
   "dobax się obrusza",
-  "Jacek mówi o UK"
+  "Jacek mówi o UK", 
+  "maja mówi 6-7",
+  "Hanna pokazuje środkowy palec",
+  "Czosnek ma dojazd",
+  "Łukasz zagaduje się podczas practise'u",
+  "Fortuna przynosi kawe jackowi",
+  "Spędzamy 30 minut na rozgrzewce",
+  "Kustosz robi t-rex'a",
+  "Fortuna rzuca niestosownym żartem",
+  "Tolo przychodzi na trening własny",
+  "Pani małgosia zamyyka sale",
+  "Kubuś zbija z tobą piątke",
+  "Wapek marudzi",
+  "Daria kogośczesze",
+  "Pastwa zlewa szulca",
+  "Szymon ma praktyki w trakcie zajęć"
 ];
