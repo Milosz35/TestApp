@@ -52,8 +52,19 @@ export const options = [
   "Tolo przychodzi na trening własny",
   "Pani małgosia zamyka sale",
   "Kubuś zbija z tobą piątke",
-  "Wapek marudzi",
+  "Wapek marudzi że jest stary",
   "Daria kogośczesze",
   "Pastwa zlewa szulca",
-  "Szymon ma praktyki w trakcie zajęć"
+  "Szymon ma praktyki w trakcie zajęć",
+  "Anna mówi o studiach",
+  "Łukasz rozkazuje dzieciom składanki",
+  "Wapek chwali swoje dzieci",
+  "Dobax ma solówke podczas 5",
+  "Maja overthinkuje",
+  "Julka opowiada o malwinie",
+  "Hanna robie side-eye",
+  "Wapek śpiewa",
+  "Jacek wspomina o byłym tancerzu aktt",
+  "Marcin mówi o diecie",
+  ""
 ];
