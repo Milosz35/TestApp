@@ -66,5 +66,10 @@ export const options = [
   "Wapek śpiewa",
   "Jacek wspomina o byłym tancerzu aktt",
   "Marcin mówi o diecie",
-  ""
+  "Ktoś wspomina o waleni konia",
+  "FootJob Julianki",
+  "Spotkanie Kadry",
+  "Ktoś ma pokaz",
+  "'Piotr Fabisiak wraca do tańca'",
+  "Na zajęciach jest piątka"
 ];
