@@ -16,6 +16,12 @@
     <h1>🎲 Bingo tygodnia</h1>
   <p id="weekInfo" class="muted"></p>
   </header>
+<button class="taskbtn" id="taskbtn" aria-label="tygodniowe zadania">🙊 Zadania</button>
+
+<div id="task" class="task" hidden>
+  <div id="taskList"></div>
+</div>
+
 
   <main>
     <div id="board" class="board" aria-label="Plansza bingo 5 na 5"></div>
@@ -24,7 +30,6 @@
     <section class="controls">
       <button id="rerollBtn" class="btn">🎲 Reroll kafelka</button>
       <p id="rerollsInfo" class="muted"></p>
-      <button id="newBoardBtn" class="btn">Wygeneruj nową planszę</button>
       <p id="status" class="status"></p>
       <p class="muted small">
         Plansza zmienia się automatycznie co tydzień.
@@ -32,7 +37,7 @@
       <p id="goldenCount" class="muted"></p>
     </section>
 
-    <footer>@ver1.0.5</footer>
+    <footer>@ver1.1.0</footer>
   </main>
   <script type="module" src="./js/app.js"></script>
 </body>
