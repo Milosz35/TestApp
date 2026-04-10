@@ -1,4 +1,5 @@
 import { options } from "../data/options.js";
+import { tasks } from "../data/task.js";
 
 const boardEl = document.getElementById("board");
 const statusEl = document.getElementById("status");
@@ -7,13 +8,18 @@ const newBoardBtn = document.getElementById("newBoardBtn");
 const goldenCountEl = document.getElementById("goldenCount");
 const rerollBtn = document.getElementById("rerollBtn");
 const rerollsInfoEl = document.getElementById("rerollsInfo");
+const taskBtn = document.getElementById("taskbtn");
+const taskBox = document.getElementById("task");
+const taskListEl = document.getElementById("taskList");
 
 const SIZE = 5;
 const TILES_COUNT = SIZE * SIZE;
 
 function boot() {
   init();
-  scheduleMondayNotification(); 
+  if (window.cordova) {
+    scheduleMondayNotification();
+  }
 }
 
 if (window.cordova) {
@@ -225,8 +231,82 @@ rerollBtn.addEventListener("click", () => {
   renderBoard(board);
   checkWin(board);
   goldenBingo(board);
+ if (newBoardBtn) {
   newBoardBtn.addEventListener("click", () => {
     alert("Nową planszę dostaniesz w kolejnym tygodniu 🙂");
+  });
+}
+
+    let weeklyTasks = loadTasks(weekKey);
+  if (!weeklyTasks) {
+    weeklyTasks = createNewTasks(weekKey);
+  }
+
+  renderTasks(weeklyTasks);
+
+ if (taskBtn && taskBox) {
+  taskBtn.addEventListener("click", () => {
+    taskBox.hidden = !taskBox.hidden;
+  });
+}
+}
+
+function taskStorageKeyForWeek(weekKey) {
+  return `bingo-tasks:${weekKey}`;
+}
+
+function loadTasks(weekKey) {
+  const raw = localStorage.getItem(taskStorageKeyForWeek(weekKey));
+  if (!raw) return null;
+  try {
+    return JSON.parse(raw);
+  } catch {
+    return null;
+  }
+}
+
+function saveTasks(weekKey, weeklyTasks) {
+  localStorage.setItem(taskStorageKeyForWeek(weekKey), JSON.stringify(weeklyTasks));
+}
+
+function createNewTasks(weekKey) {
+  if (tasks.length < 3) {
+    throw new Error(`Masz ${tasks.length} zadań, a potrzebujesz minimum 3.`);
+  }
+
+  const picked = shuffle(tasks).slice(0, 3);
+  const weeklyTasks = picked.map(text => ({ text, checked: false }));
+
+  saveTasks(weekKey, weeklyTasks);
+  return weeklyTasks;
+}
+
+function renderTasks(weeklyTasks) {
+  taskListEl.innerHTML = "";
+
+  weeklyTasks.forEach((task, index) => {
+    const wrapper = document.createElement("div");
+    wrapper.className = "task-item";
+
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.id = `task-${index}`;
+    checkbox.checked = task.checked;
+    
+
+    const label = document.createElement("label");
+    label.htmlFor = `task-${index}`;
+    label.textContent = task.text;
+
+    checkbox.addEventListener("change", () => {
+      task.checked = checkbox.checked;
+      saveTasks(getWeekKey(), weeklyTasks);
+    
+    });
+
+    wrapper.appendChild(checkbox);
+    wrapper.appendChild(label);
+    taskListEl.appendChild(wrapper);
   });
 }
 
@@ -307,7 +387,7 @@ function nextMondayAt(hour = 9, minute = 0) {
 }
 
 function scheduleMondayNotification() {
-  if (!cordova || !cordova.plugins || !cordova.plugins.notification) return;
+  if (!window.cordova || !cordova.plugins || !cordova.plugins.notification) return;
 
   const notif = cordova.plugins.notification.local;
 

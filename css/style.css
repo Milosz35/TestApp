@@ -134,6 +134,35 @@ footer {
   font-size: 8px;
 }
 
+.task{
+  margin-top: 12px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--tile);
+}
+
+.task-item{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.task-item:last-child{
+  margin-bottom: 0;
+}
+
+.taskbtn{
+  padding: 10px 14px;
+  border: none;
+  border-radius: 10px;
+  background: #4b67ff;
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+}
+
 .board.golden .tile{
   background: #D4AF37 !important;
   border-color: #b88a00 !important;
@@ -160,4 +189,7 @@ footer {
 @media (max-width: 360px){
   .board{ gap: 5px; padding: 5px; }
   .tile{ padding: 6px 5px; font-size: 9px; }
+}
+.task.checked {
+  background-color: #2e9e5b;
 }
