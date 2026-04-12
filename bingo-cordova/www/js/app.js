@@ -1,6 +1,10 @@
 import { options } from "../data/options.js";
 import { tasks } from "../data/task.js";
 
+const wartosci = ['3000', '3000', '1500', '1500', '1500', '800', '600', '600','200', '100','50'];
+const turnieje = ['Mistrzostwa Polski', 'Polish Open Championships', 'WDSF World Open', 'Puchar Polski', 'WDSF International Open', 'WDSF Open', 'WDSF Rising Stars', 'A Klasa', 'B Klasa','C Klasa', 'D Klasa'];
+const btn = document.getElementById('btnCalc');
+
 const boardEl = document.getElementById("board");
 const statusEl = document.getElementById("status");
 const weekInfoEl = document.getElementById("weekInfo");
@@ -249,6 +253,74 @@ rerollBtn.addEventListener("click", () => {
     taskBox.hidden = !taskBox.hidden;
   });
 }
+
+btn.addEventListener('click', function(){
+
+     const existCalc= document.getElementById('Calc');
+
+     if(existCalc){
+          existCalc.remove();
+          return;
+     }
+     const bodyC = document.createElement("div");
+     bodyC.id = "Calc";
+
+     const fragment1 = document.createElement("div");
+     fragment1.id = "fragment";
+     const label1 = document.createElement("label");
+     label1.id = "labelek";
+     label1.textContent=" Podaj Swoje Miejsce: ";
+     const inpucik = document.createElement("input");
+     inpucik.id = "miejsce";
+
+     const fragment2 = document.createElement("div");
+     fragment2.id = "fragment2";
+     const label2 = document.createElement("label");
+     label2.id = "labelek";
+     label2.textContent=" Rodzaj Turnieju: ";
+     const wybor = document.createElement("Select");
+     wybor.id = "turniej";
+
+     const btnprzelicz = document.createElement("button");
+     btnprzelicz.id = "przelicznik";
+     btnprzelicz.textContent="Kalkuluj";
+
+     const fragment3 = document.createElement("div");
+     fragment3.id = "fragment3";
+     const label3 = document.createElement("label");
+     label3.id = "labelek";
+     label3.textContent=" Punkty: "; 
+     const para = document.createElement("p");
+     para.id = "punkty";
+
+
+
+     const boarding = document.getElementById('board');
+     boarding.before(bodyC);
+     document.getElementById('Calc').appendChild(fragment1);
+     document.getElementById('fragment').appendChild(label1);
+     document.getElementById('fragment').appendChild(inpucik);
+     document.getElementById('Calc').appendChild(fragment2);
+     document.getElementById('fragment2').appendChild(label2);
+     document.getElementById('fragment2').appendChild(wybor);
+     const opcja = [];
+     for(let i = 0; i<turnieje.length; i++){
+           opcja[i] = document.createElement("option");
+           opcja[i].textContent = turnieje[i];
+           opcja[i].value = wartosci[i];
+           document.getElementById('turniej').appendChild(opcja[i]);
+     }
+     document.getElementById('Calc').appendChild(btnprzelicz);
+     document.getElementById('Calc').appendChild(fragment3);
+     document.getElementById('fragment3').appendChild(label3);
+     document.getElementById('fragment3').appendChild(para);
+
+     document.getElementById('przelicznik').addEventListener('click', function() {
+
+     const przeliczone = Math.round( document.getElementById('turniej').value * (1/Math.sqrt(document.getElementById('miejsce').value) + 1.05 ** (1-document.getElementById('miejsce').value))/2);
+     document.getElementById('punkty').textContent=przeliczone;
+     });
+});
 }
 
 function taskStorageKeyForWeek(weekKey) {
