@@ -193,3 +193,37 @@ footer {
 .task.checked {
   background-color: #2e9e5b;
 }
+
+#Calc {
+    border: solid 2px;
+    background-color: #242b4a;
+    padding: 4px;
+    border-radius: 13px 13px 13px 13px;
+}
+#fragment, #fragment2, #fragment3{
+    padding: 15px;
+
+}
+#przelicznik{
+    border-radius: 15px 30px 15px 30px;
+    padding: 8px;
+    margin-left: 275px;
+    background: #4b67ff;
+
+}
+
+#punkty {
+    display: inline;
+}
+
+#btnCalc{
+  border-radius: 15px 30px 15px 30px;
+  padding: 8px;
+  border: none;
+  border-radius: 10px;
+  background: #4b67ff;
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+  display:inline;
+}
