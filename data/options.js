@@ -71,5 +71,7 @@ export const options = [
   "Spotkanie Kadry",
   "Ktoś ma pokaz",
   "'Piotr Fabisiak wraca do tańca'",
-  "Na zajęciach jest piątka"
+  "Na zajęciach jest piątka",
+  "Borków nie ma practisie",
+  "Tolek opowiada dowcip"
 ];
