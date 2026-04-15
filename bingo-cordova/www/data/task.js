@@ -9,6 +9,9 @@ export const tasks = [
 "Poproś wapka o autograf",
 "Skomplementuj Darie",
 "Puść jakąś muze na zajęciach Wapka",
+"Wykonaj ćwiczenie Pana Tolka przez 5 min",
+"Ubierz się niekonwencjonalnie na trening",
+"Zagraj z Alą w impostora",
 ""
 
 

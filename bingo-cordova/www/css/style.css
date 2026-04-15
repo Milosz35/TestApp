@@ -8,6 +8,7 @@
   --border: rgba(255,255,255,0.14);
 }
 
+
 * { box-sizing: border-box; }
 
 body {
@@ -199,6 +200,7 @@ footer {
     background-color: #242b4a;
     padding: 4px;
     border-radius: 13px 13px 13px 13px;
+    background-image: url("../img/Math.jpg");
 }
 #fragment, #fragment2, #fragment3{
     padding: 15px;
@@ -218,7 +220,7 @@ footer {
 
 #btnCalc{
   border-radius: 15px 30px 15px 30px;
-  padding: 8px;
+  padding: 10px 14px;
   border: none;
   border-radius: 10px;
   background: #4b67ff;
